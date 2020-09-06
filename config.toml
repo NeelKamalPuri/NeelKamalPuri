@@ -190,20 +190,20 @@ disqusShortname = ""
     copyright = "Company Name"
 
     # Uses font awesome icons
-    [[params.footer.social]]
-      icon = "fa-twitter"
-      url= "https://www.twitter.com"
-      label = "Twitter"
+   # [[params.footer.social]]
+    #  icon = "fa-twitter"
+     # url= "https://www.twitter.com"
+      #label = "Twitter"
 
     #[[params.footer.social]]
-      icon = "fa-facebook"
-      url= "https://www.facebook.com"
-      label = "Facebook"
+    #  icon = "fa-facebook"
+     # url= "https://www.facebook.com"
+      #label = "Facebook"
 
     #[[params.footer.social]]
-      icon = "fa-instagram"
-      url= "https://www.instagram.com"
-      label = "Instagram"
+    #  icon = "fa-instagram"
+      #url= "https://www.instagram.com"
+      #label = "Instagram"
     
     [[params.footer.social]]
       icon = "fa-github"
@@ -215,7 +215,7 @@ disqusShortname = ""
       url= "https://www.linkedin.com/in/neel-kamal-puri/"
       label = "LinkedIn"
 
-    [[params.footer.quicklinks]]
-      text = "Design: "
-      url= "https://www.html5up.net"
-      alt = "HTML5 UP"
+    #[[params.footer.quicklinks]]
+     # text = "Design: "
+      #url= "https://www.html5up.net"
+      #alt = "HTML5 UP"
