@@ -1,5 +1,5 @@
 ---
-title: "Trump's approval margins"
+title: "Studying approval margins of Donal Trump"
 author: "Neel Kamal Puri"
 date: "`r Sys.Date()`"
 output:
@@ -43,7 +43,7 @@ library(readxl)
 library(vroom)
 ```
 
-# Trump's Approval Margins
+# Will he return?
 
 With re-elections in the United States coming close, it is interesting to study the popularity of the current president - Donal Trump. We therefore use detailed data from the website fivethirtyeight.com which provides poll data on Donal Trump.
 
