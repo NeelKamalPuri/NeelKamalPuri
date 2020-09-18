@@ -92,10 +92,10 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
+      title = "Is climate change a hoax? "
+      subtitle = "A comprehensive study of climate data from NASA"
       image = "pic01.jpg"
-      url = "blogs/aliquam"
+      url = "blogs/Climate data analysis"
 
     [[params.tiles.showcase]]
       title = "Tempus"
