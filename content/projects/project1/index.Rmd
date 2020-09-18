@@ -45,9 +45,9 @@ library(vroom)
 
 # How real is climate change?
 
-We have sourced our data from NASA's website to begin our analysis:
+We have sourced our data from NASA's website to begin our analysis.
 
-```{r weather_data, cache=TRUE, echo=FALSE}
+```{r weather_data, cache=TRUE}
 weather <- 
   read_csv("https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.csv", 
            skip = 1, 

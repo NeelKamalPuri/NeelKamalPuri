@@ -43,7 +43,7 @@ library(readxl)
 library(vroom)
 ```
 
-#Excess rentals in TfL bike sharing
+# Excess rentals in TfL bike sharing
 
 In this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.
 

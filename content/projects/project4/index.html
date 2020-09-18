@@ -14,19 +14,19 @@ output:
 
 
 
-<div id="challenge-2-excess-rentals-in-tfl-bike-sharing" class="section level1">
-<h1>Challenge 2: Excess rentals in TfL bike sharing</h1>
+<div id="excess-rentals-in-tfl-bike-sharing" class="section level1">
+<h1>Excess rentals in TfL bike sharing</h1>
 <p>In this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.</p>
 <pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
 
 # Download TFL data to temporary file
 httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
-<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20200918%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200918T200911Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=27c591c2735ce7b880236d0923d932c463b5490fb337ce6a11ad39a972e1ecc8&amp;X-Amz-SignedHeaders=host]
-##   Date: 2020-09-18 20:09
+<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20200918%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200918T202159Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=74fe7178161f37107eae8772e06b74f2e11bc6de4c0cc0e790c356a20c83737b&amp;X-Amz-SignedHeaders=host]
+##   Date: 2020-09-18 20:23
 ##   Status: 200
 ##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 ##   Size: 165 kB
-## &lt;ON DISK&gt;  C:\Users\neelk\AppData\Local\Temp\Rtmp8KselS\file430c50d266a0.xlsx</code></pre>
+## &lt;ON DISK&gt;  C:\Users\neelk\AppData\Local\Temp\RtmpgrpM1k\file35c0589030c9.xlsx</code></pre>
 <pre class="r"><code># Use read_excel to read it as dataframe
 bike0 &lt;- read_excel(bike.temp,
                    sheet = &quot;Data&quot;,
