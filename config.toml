@@ -98,22 +98,22 @@ disqusShortname = ""
       url = "projects/project1"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic02.jpg"
-      url = "blogs/tempus"
+      title = "Relationship between HIV and life expectancy"
+      subtitle = "Exporing the Gapminder data set"
+      image = "life-expectancy-decline.jpg"
+      url = "projects/project2"
+
+    [[params.tiles.showcase]] 
+      title = "Will Trump return in 2021?"
+      subtitle = "Studying the popularity of the America's choice using fivethirtyeight.com polling data"
+      image = "trump.jpg"
+      url = "projects/project3"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
-
-    [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
-      url = "blogs/ipsum"
+      title = "Analysis of bike rental data from TfL bike sharing"
+      subtitle = "Do Londoners like biking all year round?"
+      image = "londonerbiking.jpg"
+      url = "projects/project4"
 
     #[[params.tiles.showcase]]
       #title = "Consequat"
