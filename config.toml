@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "Is climate change a hoax? "
       subtitle = "A comprehensive study of climate data from NASA"
       image = "pic01.jpg"
-      url = "/blogs/Climate/"
+      url = "projects/project1"
 
     [[params.tiles.showcase]]
       title = "Tempus"
