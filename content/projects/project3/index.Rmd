@@ -13,7 +13,7 @@ output:
 ---
 
 
-```{r, setup, include=FALSE, echo =FALSE}
+```{r, setup, include=FALSE, echo =FALSE, message=FALSE}
 knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE, 
