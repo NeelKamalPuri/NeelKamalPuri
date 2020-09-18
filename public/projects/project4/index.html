@@ -84,12 +84,12 @@
 
 # Download TFL data to temporary file
 httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
-<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20200918%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200918T202159Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=74fe7178161f37107eae8772e06b74f2e11bc6de4c0cc0e790c356a20c83737b&amp;X-Amz-SignedHeaders=host]
-##   Date: 2020-09-18 20:23
+<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20200918%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200918T203803Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=460eec4ec16ca7e19827a8d1f184d6b0f94427beb68eb45970324046eabff6df&amp;X-Amz-SignedHeaders=host]
+##   Date: 2020-09-18 20:39
 ##   Status: 200
 ##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 ##   Size: 165 kB
-## &lt;ON DISK&gt;  C:\Users\neelk\AppData\Local\Temp\RtmpgrpM1k\file35c0589030c9.xlsx</code></pre>
+## &lt;ON DISK&gt;  C:\Users\neelk\AppData\Local\Temp\Rtmp0Kf8aQ\file2e604ff0d49.xlsx</code></pre>
 <pre class="r"><code># Use read_excel to read it as dataframe
 bike0 &lt;- read_excel(bike.temp,
                    sheet = &quot;Data&quot;,

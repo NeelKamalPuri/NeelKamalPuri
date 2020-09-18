@@ -27,10 +27,10 @@ url &amp;lt;- &amp;quot;https://data.london.gov.uk/download/number-bicycle-hires
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://neelkamalpuri.netlify.app/projects/project1/</guid>
-      <description>How real is climate change?We have sourced our data from NASA’s website to begin our analysis:
-To clean our data set and make it more legible, we tidy it using the code below:
+      <description>How real is climate change?We have sourced our data from NASA’s website to begin our analysis.
+weather &amp;lt;- read_csv(&amp;quot;https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.csv&amp;quot;, skip = 1, na = &amp;quot;***&amp;quot;)To clean our data set and make it more legible, we tidy it using the code below:
 tidyweather &amp;lt;- weather %&amp;gt;% select(Year,Jan,Feb,Mar,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec) %&amp;gt;% gather(&amp;quot;month&amp;quot;,&amp;quot;delta&amp;quot;,2:12)Plotting InformationLet us plot the data using a time-series scatter plot, and add a trendline.
-tidyweather &amp;lt;- tidyweather %&amp;gt;%mutate(date = ymd(paste(as.character(Year), month, &amp;quot;1&amp;quot;)),month = month(date, label=TRUE),year = year(date))ggplot(tidyweather, aes(x=date, y = delta))+geom_point()+geom_smooth(color=&amp;quot;red&amp;quot;) +theme_bw() +labs (title = &amp;quot;Weather Anomalies&amp;quot;)Is the effect of increasing temperature more pronounced in some months?</description>
+tidyweather &amp;lt;- tidyweather %&amp;gt;%mutate(date = ymd(paste(as.</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@ tidyweather &amp;lt;- tidyweather %&amp;gt;%mutate(date = ymd(paste(as.characte
     </item>
     
     <item>
-      <title>Studying approval margins of Donal Trump</title>
+      <title>Studying approval margins of Donald Trump</title>
       <link>https://neelkamalpuri.netlify.app/projects/project3/</link>
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
       

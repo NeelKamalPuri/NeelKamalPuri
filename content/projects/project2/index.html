@@ -129,14 +129,13 @@ ggplot(hiv_missing, aes(x= reorder(region, -n), y= n)) +
 <h2>How has mortality rate for under 5 changed by region</h2>
 <p>The data on mortality rate was incomplete and therefore inconsistent. Analysing the entire period would have not been a fair comparison. Therefore, we decided to analyse the last 20 years for which the data was complete. This allowed us to accurately illustrate which countries had made the most or least improvement in mortality rates for under-5s.</p>
 <pre class="r"><code># How has mortality rate for under 5 changed by region? In each region, find the top 5 countries that have seen the greatest improvement, as well as those 5 countries where mortality rates have had the least improvement or even deterioration.
-# TO DO
 mortality_rates &lt;- select(worldbank_data, country, date, mortality_rate, iso3c)
 mortality_regions &lt;- left_join(mortality_rates, countries_regions)
 
 # 1. Filter dataset on year = 1996 | year = 2016
 # 2. Pivot wider making 1996 and 2016 two separate columns so we have one row in our data per country
 # 3. Delete the rows with NAs (Explain this properly in our doc)
-# 4.  For the observations left, create new column = (year 2016 - year 1996) / year 1996
+# 4. For the observations left, create new column = (year 2016 - year 1996) / year 1996
 # 5. Select top 5 and bottom 5 per region and move these observations to a new dataframe
 # 6. Plot this dataframe in a facet wrap graph and also produce a table of this data  
 
@@ -165,23 +164,25 @@ bottom_5_improvements &lt;- country_mortality %&gt;%
 
 # Plot Top 5 improvements per region
 ggplot(top_5_improvements, aes(x=country, y=mortality_change)) +
-       geom_col() +
+       geom_col(fill=&#39;#66bfbf&#39;, color=&quot;black&quot;) +
        labs(title=&quot;Africa making strides in mortality rates under 5&quot;,
        subtitle=&quot;Most improved mortality rate countries by region&quot;,
        caption=&quot;Source: World Bank&quot;,
        x=&quot;Country&quot;,
        y=&quot;Amount improved (per 1000 live births)&quot;) +
-       facet_wrap(~ region) +
+       facet_wrap(~ region, scales = &quot;free_x&quot;) +
        theme_bw() +
+       scale_y_log10() +
        theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
        theme(plot.subtitle = element_text(size = 8)) +
        theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
        theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(axis.text.x = element_text(angle = 270, hjust = .1)) +
        theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
 <p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Plot Bottom 5 improvements per region
 ggplot(bottom_5_improvements, aes(x=country, y=mortality_change)) +
-       geom_col() +
+       geom_col(fill=&#39;#66bfbf&#39;, color=&quot;black&quot;) +
        labs(title=&quot;Least improved mortality rate countries by region&quot;,
        caption=&quot;Source: World Bank&quot;,
        x=&quot;Country&quot;,

@@ -165,14 +165,13 @@ The data on mortality rate was incomplete and therefore inconsistent. Analysing 
 
 ```{r, cache=TRUE}
 # How has mortality rate for under 5 changed by region? In each region, find the top 5 countries that have seen the greatest improvement, as well as those 5 countries where mortality rates have had the least improvement or even deterioration.
-# TO DO
 mortality_rates <- select(worldbank_data, country, date, mortality_rate, iso3c)
 mortality_regions <- left_join(mortality_rates, countries_regions)
 
 # 1. Filter dataset on year = 1996 | year = 2016
 # 2. Pivot wider making 1996 and 2016 two separate columns so we have one row in our data per country
 # 3. Delete the rows with NAs (Explain this properly in our doc)
-# 4.  For the observations left, create new column = (year 2016 - year 1996) / year 1996
+# 4. For the observations left, create new column = (year 2016 - year 1996) / year 1996
 # 5. Select top 5 and bottom 5 per region and move these observations to a new dataframe
 # 6. Plot this dataframe in a facet wrap graph and also produce a table of this data  
 
@@ -201,24 +200,26 @@ bottom_5_improvements <- country_mortality %>%
 
 # Plot Top 5 improvements per region
 ggplot(top_5_improvements, aes(x=country, y=mortality_change)) +
-       geom_col() +
+       geom_col(fill='#66bfbf', color="black") +
        labs(title="Africa making strides in mortality rates under 5",
        subtitle="Most improved mortality rate countries by region",
        caption="Source: World Bank",
        x="Country",
        y="Amount improved (per 1000 live births)") +
-       facet_wrap(~ region) +
+       facet_wrap(~ region, scales = "free_x") +
        theme_bw() +
+       scale_y_log10() +
        theme(plot.title = element_text(face = "bold", size = 10)) +
        theme(plot.subtitle = element_text(size = 8)) +
        theme(axis.title.x = element_text(face = "bold", size = 10)) +
        theme(axis.title.y = element_text(face = "bold", size = 10)) +
+       theme(axis.text.x = element_text(angle = 270, hjust = .1)) +
        theme(plot.caption = element_text(face = "bold", size = 8))
 
  
 # Plot Bottom 5 improvements per region
 ggplot(bottom_5_improvements, aes(x=country, y=mortality_change)) +
-       geom_col() +
+       geom_col(fill='#66bfbf', color="black") +
        labs(title="Least improved mortality rate countries by region",
        caption="Source: World Bank",
        x="Country",
