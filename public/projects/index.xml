@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Analysis of rental data from TfL bike sharing</title>
+      <link>https://neelkamalpuri.netlify.app/projects/project4/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://neelkamalpuri.netlify.app/projects/project4/</guid>
+      <description>Challenge 2: Excess rentals in TfL bike sharingIn this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.
+url &amp;lt;- &amp;quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&amp;quot;# Download TFL data to temporary filehttr::GET(url, write_disk(bike.temp &amp;lt;- tempfile(fileext = &amp;quot;.</description>
+    </item>
+    
+    <item>
       <title>Climate change and weather temperature anomalies</title>
       <link>https://neelkamalpuri.netlify.app/projects/project1/</link>
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
@@ -21,6 +31,27 @@
 To clean our data set and make it more legible, we tidy it using the code below:
 tidyweather &amp;lt;- weather %&amp;gt;% select(Year,Jan,Feb,Mar,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec) %&amp;gt;% gather(&amp;quot;month&amp;quot;,&amp;quot;delta&amp;quot;,2:12)Plotting InformationLet us plot the data using a time-series scatter plot, and add a trendline.
 tidyweather &amp;lt;- tidyweather %&amp;gt;%mutate(date = ymd(paste(as.character(Year), month, &amp;quot;1&amp;quot;)),month = month(date, label=TRUE),year = year(date))ggplot(tidyweather, aes(x=date, y = delta))+geom_point()+geom_smooth(color=&amp;quot;red&amp;quot;) +theme_bw() +labs (title = &amp;quot;Weather Anomalies&amp;quot;)Is the effect of increasing temperature more pronounced in some months?</description>
+    </item>
+    
+    <item>
+      <title>Exploring the Gapminder data set</title>
+      <link>https://neelkamalpuri.netlify.app/projects/project2/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://neelkamalpuri.netlify.app/projects/project2/</guid>
+      <description>Gapminder revisitedWe are studying the Gapminder data set to analyse how HIV and life expectancy affect different countries. We will also study the relationship between the two variables to analyse whether one impacts the other.
+# load gapminder HIV datahiv &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;adults_with_hiv_percent_age_15_49.csv&amp;quot;))life_expectancy &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;life_expectancy_years.csv&amp;quot;))# life_expectancy &amp;lt;- my_data &amp;lt;- read.csv(file.choose(&amp;#39;life_expectancy_years.csv&amp;#39;))# get World bank data using wbstatsindicators &amp;lt;- c(&amp;quot;SP.DYN.TFRT.IN&amp;quot;,&amp;quot;SE.PRM.NENR&amp;quot;, &amp;quot;SH.DYN.MORT&amp;quot;, &amp;quot;NY.GDP.PCAP.KD&amp;quot;)library(wbstats)# Load worldbank data setworldbank_data &amp;lt;- wb_data(country=&amp;quot;countries_only&amp;quot;,indicator = indicators, start_date = 1960,end_date = 2016)# Load countries data setcountries &amp;lt;- wbstats::wb_cachelist$countries# Create one column for all years, instead of one column for every individual yearhiv_cleaned &amp;lt;- pivot_longer(hiv, 2:34, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;hiv_prev&amp;quot;)life_exp_cleanead &amp;lt;- pivot_longer(life_expectancy, 2:302, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;life_exp&amp;quot;)# Rename columns for clarityworldbank_data &amp;lt;- worldbank_data %&amp;gt;%rename(GDP_percap = NY.</description>
+    </item>
+    
+    <item>
+      <title>Trump&#39;s approval margins</title>
+      <link>https://neelkamalpuri.netlify.app/projects/project3/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://neelkamalpuri.netlify.app/projects/project3/</guid>
+      <description>Trump’s Approval MarginsWith re-elections in the United States coming close, it is interesting to study the popularity of the current president - Donal Trump. We therefore use detailed data from the website fivethirtyeight.com which provides poll data on Donal Trump.
+all polls that track the president’s approval.
+In order to fully understand the data, we must first use the glimpse() function before deciding how we must continue our analysis.</description>
     </item>
     
   </channel>

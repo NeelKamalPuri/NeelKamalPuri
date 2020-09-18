@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="I am studying at London Business School, and reading for Masters in Analytics and Management. I graduate in 2021, and am keen to work in consulting, asset management, investment banking and private equity.I was previously working at PwC Deals, as a Consultant in the Valuations and Modelling team">
+	<meta name="author" content="Neel Kamal Puri">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>Exploring the Gapminder data set &middot; Portfolio website for Neel Kamal Puri</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="https://neelkamalpuri.netlify.app/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="https://neelkamalpuri.netlify.app/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="https://neelkamalpuri.netlify.app/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="https://neelkamalpuri.netlify.app/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="https://neelkamalpuri.netlify.app/" class="logo"><strong>Neel Kamal Puri</strong> <span></span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="https://neelkamalpuri.netlify.app/">Home</a></li>
+            
+                <li><a href="https://neelkamalpuri.netlify.app/blogs">Blogs</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="https://neelkamalpuri.netlify.app/blogs" class="button special fit">Get Started</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Exploring the Gapminder data set</h1>
+                            </header>
+                            
+                            
+
+
+<div id="gapminder-revisited" class="section level1">
+<h1>Gapminder revisited</h1>
+<p>We are studying the Gapminder data set to analyse how HIV and life expectancy affect different countries. We will also study the relationship between the two variables to analyse whether one impacts the other.</p>
+<pre class="r"><code># load gapminder HIV data
+hiv &lt;- read_csv(here::here(&quot;data&quot;,&quot;adults_with_hiv_percent_age_15_49.csv&quot;))
+
+life_expectancy &lt;- read_csv(here::here(&quot;data&quot;,&quot;life_expectancy_years.csv&quot;))
+# life_expectancy &lt;- my_data &lt;- read.csv(file.choose(&#39;life_expectancy_years.csv&#39;))
+
+# get World bank data using wbstats
+indicators &lt;- c(&quot;SP.DYN.TFRT.IN&quot;,&quot;SE.PRM.NENR&quot;, &quot;SH.DYN.MORT&quot;, &quot;NY.GDP.PCAP.KD&quot;)
+
+
+library(wbstats)
+
+# Load worldbank data set
+worldbank_data &lt;- wb_data(country=&quot;countries_only&quot;,
+                          indicator = indicators, 
+                          start_date = 1960,
+                          end_date = 2016)
+
+# Load countries data set
+countries &lt;-  wbstats::wb_cachelist$countries
+
+# Create one column for all years, instead of one column for every individual year
+hiv_cleaned &lt;- pivot_longer(hiv, 2:34, names_to = &quot;date&quot;, values_to = &quot;hiv_prev&quot;)
+life_exp_cleanead &lt;- pivot_longer(life_expectancy, 2:302, names_to = &quot;date&quot;, values_to = &quot;life_exp&quot;)
+
+# Rename columns for clarity
+worldbank_data &lt;- worldbank_data %&gt;%
+                  rename(GDP_percap = NY.GDP.PCAP.KD,
+                         prim_school_enroll = SE.PRM.NENR,
+                         mortality_rate = SH.DYN.MORT,
+                         fertility_rate = SP.DYN.TFRT.IN)</code></pre>
+<div id="what-is-the-relationship-between-hiv-prevalence-and-life-expectancy" class="section level2">
+<h2>What is the relationship between HIV prevalence and life expectancy?</h2>
+<pre class="r"><code># Relationship between HIV prevalence and life expectancy?
+# Do inner_join because we only want to keep the observations for which we both have the hiv prevalence and the life expectancy
+life_exp_hiv &lt;- inner_join(life_exp_cleanead, hiv_cleaned) %&gt;% 
+                na.omit()
+ggplot(life_exp_hiv, aes(x=hiv_prev, y=life_exp)) +
+  geom_point(alpha=0.15) +
+  labs(title=&quot;Initial increase of total HIV cases per 100 people sharply diminishes\nlife expectancy at birth&quot;,
+       subtitle=&quot;Relationship between HIV prevalence and life expectancy&quot;,
+       caption=&quot;Source: World Bank&quot;,
+       x=&quot;Number of HIV cases per 100 population aged 15-49&quot;,
+       y=&quot;Life expectancy at birth&quot;) +
+  geom_smooth() +
+  theme_bw() + 
+  theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.subtitle = element_text(size = 8)) +
+  theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" />
+There is a clear correlation between life expectancy at birth and the number of HIV cases (per 100 people). Life expectancy is greater in countries with lower HIV prevalence.</p>
+</div>
+<div id="what-is-the-relationship-between-fertility-rate-and-gdp-per-capita" class="section level2">
+<h2>What is the relationship between fertility rate and GDP per capita?</h2>
+<pre class="r"><code># Relationship between fertility rate and GDP per capita? 
+fertility_gdp &lt;- select(worldbank_data, country, GDP_percap, fertility_rate)
+#Generate a scatterplot with a smoothing line to report your results. You may find facetting by region useful
+ggplot(fertility_gdp, aes(x=fertility_rate, y=GDP_percap)) +
+  geom_point(alpha=0.15) +
+  labs(title=&quot;Having fewer babies turns out to be a stimulating factor for the economy&quot;,
+       subtitle=&quot;Relationship between fertility rate and GDP per capita&quot;,
+       x=&quot;Fertility rate in number of babies per woman&quot;,
+       y=&quot;GDP per capita in constant 2010 US$&quot;,
+       caption=&quot;Source: World Bank&quot;) +
+  geom_smooth() +
+  theme_bw() +
+  theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.subtitle = element_text(size = 8)) +
+  theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" />
+The graph shows that in countries where the average amount of babies is lower, GDP per capita appears to be higher. This could be due to mothers having less commitments to their children and the ability to work more than in countries with a higher fertility rate.</p>
+</div>
+<div id="what-regions-have-the-most-observations-with-missing-hiv-data" class="section level2">
+<h2>What regions have the most observations with missing HIV data?</h2>
+<pre class="r"><code># Which regions have the most observations with missing HIV data?
+# Convert country names into iso3c country codes to match with other data frames
+library(countrycode)
+country_names &lt;- hiv_cleaned$country
+hiv_cleaned$iso3c &lt;- countryname(country_names, &#39;iso3c&#39;)
+countries_regions &lt;- select(countries, iso3c, region)
+# Match all region names to the hiv data set, keeping all values of the hiv data set
+hiv_regions &lt;- left_join(hiv_cleaned, countries_regions)
+hiv_missing &lt;- hiv_regions %&gt;%
+               filter(is.na(hiv_prev)) %&gt;%
+               group_by(region) %&gt;% 
+               count() %&gt;%
+               arrange(desc(n))
+                
+#Generate a bar chart (`geom_col()`), in descending order.
+# TO DO
+ggplot(hiv_missing, aes(x= reorder(region, -n), y= n)) +
+  geom_col(fill=&#39;#66bfbf&#39;, color=&quot;black&quot;) +
+  labs (y=&#39;Amount of missing HIV data&#39;, x=&#39;Region&#39;,
+        title=&#39;Where did the HIV data go?&#39;,
+        subtitle =&quot;Missing global HIV data by Region&quot;,
+        caption =&quot;Source: World Bank&quot;) +
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  theme(plot.title = element_text(face = &quot;bold&quot;, size = 10, margin=margin(b = 15))) +
+  theme(plot.subtitle = element_text(size = 8)) +
+  theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="how-has-mortality-rate-for-under-5-changed-by-region" class="section level2">
+<h2>How has mortality rate for under 5 changed by region</h2>
+<p>The data on mortality rate was incomplete and therefore inconsistent. Analysing the entire period would have not been a fair comparison. Therefore, we decided to analyse the last 20 years for which the data was complete. This allowed us to accurately illustrate which countries had made the most or least improvement in mortality rates for under-5s.</p>
+<pre class="r"><code># How has mortality rate for under 5 changed by region? In each region, find the top 5 countries that have seen the greatest improvement, as well as those 5 countries where mortality rates have had the least improvement or even deterioration.
+# TO DO
+mortality_rates &lt;- select(worldbank_data, country, date, mortality_rate, iso3c)
+mortality_regions &lt;- left_join(mortality_rates, countries_regions)
+
+# 1. Filter dataset on year = 1996 | year = 2016
+# 2. Pivot wider making 1996 and 2016 two separate columns so we have one row in our data per country
+# 3. Delete the rows with NAs (Explain this properly in our doc)
+# 4.  For the observations left, create new column = (year 2016 - year 1996) / year 1996
+# 5. Select top 5 and bottom 5 per region and move these observations to a new dataframe
+# 6. Plot this dataframe in a facet wrap graph and also produce a table of this data  
+
+#Plotting improvement over a 20-year period due to missing NA data and an unspecific task.
+#Find the mortality difference from 1996 to 2016(most recent data)
+country_mortality &lt;- mortality_regions %&gt;%
+                     filter(date %in% c(&quot;1996&quot;, &quot;2016&quot;)) %&gt;%
+                     pivot_wider(
+                       names_from = &quot;date&quot;,
+                       values_from = &quot;mortality_rate&quot;) %&gt;%
+                     rename(rate_2016 = &quot;2016&quot;,
+                            rate_1996 = &quot;1996&quot;) %&gt;%
+                     mutate(mortality_change=(rate_1996-rate_2016))
+
+#Find top 5 improvements per region
+top_5_improvements &lt;- country_mortality %&gt;%
+                      arrange(desc(mortality_change)) %&gt;%
+                      group_by(region) %&gt;%
+                      slice(1:5)
+
+#Find bottom 5 improvements per region
+bottom_5_improvements &lt;- country_mortality %&gt;%
+                        arrange(mortality_change) %&gt;%
+                        group_by(region) %&gt;%
+                        slice(1:5) 
+
+# Plot Top 5 improvements per region
+ggplot(top_5_improvements, aes(x=country, y=mortality_change)) +
+       geom_col() +
+       labs(title=&quot;Africa making strides in mortality rates under 5&quot;,
+       subtitle=&quot;Most improved mortality rate countries by region&quot;,
+       caption=&quot;Source: World Bank&quot;,
+       x=&quot;Country&quot;,
+       y=&quot;Amount improved (per 1000 live births)&quot;) +
+       facet_wrap(~ region) +
+       theme_bw() +
+       theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(plot.subtitle = element_text(size = 8)) +
+       theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Plot Bottom 5 improvements per region
+ggplot(bottom_5_improvements, aes(x=country, y=mortality_change)) +
+       geom_col() +
+       labs(title=&quot;Least improved mortality rate countries by region&quot;,
+       caption=&quot;Source: World Bank&quot;,
+       x=&quot;Country&quot;,
+       y=&quot;Amount improved (per 1000 live births)&quot;) +
+       facet_wrap(~ region, scales = &quot;free_x&quot;) +
+       scale_y_log10() +
+       theme_bw() +
+       theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(plot.subtitle = element_text(size = 8)) +
+       theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+       theme(axis.text.x = element_text(angle = 270, hjust = .4)) +
+       theme(plot.caption = element_text(face = &quot;bold&quot;, size = 8))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-4-2.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="is-there-a-relationship-between-primary-school-and-fertility-rate" class="section level2">
+<h2>Is there a relationship between primary school and fertility rate?</h2>
+<pre class="r"><code># Is there a relationship between primary school enrollment and fertility rate?
+primschool_fertility &lt;- select(worldbank_data, prim_school_enroll, fertility_rate)
+#Generate a scatterplot with a smoothing line to report your results. You may find facetting by region useful
+ggplot(primschool_fertility, aes(x=fertility_rate, y=prim_school_enroll)) +
+  geom_point(alpha=0.15) +
+  labs(title=&quot;How likely is it that a child goes to primary school?&quot;,
+       subtitle=&quot;Comparing the amount of children with the chance of attending primary school &quot;,
+       caption=&quot;Source: World Bank&quot;,
+       x=&quot;Fertility Rate (babies per woman)&quot;,
+       y=&quot;Children attending primary school (%)&quot;) +
+  geom_smooth() +
+  theme_bw() +
+  theme(plot.title = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.subtitle = element_text(size = 8)) +
+  theme(axis.title.x = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(axis.title.y = element_text(face = &quot;bold&quot;, size = 10)) +
+  theme(plot.caption = element_text(face = &quot;bold&quot;, size = 9))</code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-5-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>The graphs shows its is more likely for children to go primary school in countries where the average amount of children is lower. This could be due to various reasons, including cost of education or the chance that mothers with less children could be more likely to also hold full time job,.</p>
+<p>Data from:</p>
+<ul>
+<li>Life expectancy at birth (life_expectancy_years.csv)</li>
+<li>GDP per capita in constant 2010 US$ (<a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.KD" class="uri">https://data.worldbank.org/indicator/NY.GDP.PCAP.KD</a>)</li>
+<li>Female fertility: The number of babies per woman (<a href="https://data.worldbank.org/indicator/SP.DYN.TFRT.IN" class="uri">https://data.worldbank.org/indicator/SP.DYN.TFRT.IN</a>)</li>
+<li>Primary school enrollment as % of children attending primary school (<a href="https://data.worldbank.org/indicator/SE.PRM.NENR" class="uri">https://data.worldbank.org/indicator/SE.PRM.NENR</a>)</li>
+<li>Mortality rate, for under 5, per 1000 live births (<a href="https://data.worldbank.org/indicator/SH.DYN.MORT" class="uri">https://data.worldbank.org/indicator/SH.DYN.MORT</a>)</li>
+<li>HIV prevalence (adults_with_hiv_percent_age_15_49.csv): The estimated number of people living with HIV per 100 population of age group 15-49.</li>
+</ul>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.github.com/NeelKamalPuri" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/neel-kamal-puri/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Neel Kamal Puri</li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="https://neelkamalpuri.netlify.app/js/jquery.min.js"></script>
+    <script src="https://neelkamalpuri.netlify.app/js/jquery.scrolly.min.js"></script>
+    <script src="https://neelkamalpuri.netlify.app/js/jquery.scrollex.min.js"></script>
+    <script src="https://neelkamalpuri.netlify.app/js/skel.min.js"></script>
+    <script src="https://neelkamalpuri.netlify.app/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="https://neelkamalpuri.netlify.app/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

@@ -3,7 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://neelkamalpuri.netlify.app/projects/project4/</loc>
+    <lastmod>2020-09-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://neelkamalpuri.netlify.app/projects/project1/</loc>
+    <lastmod>2020-09-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://neelkamalpuri.netlify.app/projects/project2/</loc>
     <lastmod>2020-09-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -14,6 +24,11 @@
   
   <url>
     <loc>https://neelkamalpuri.netlify.app/projects/</loc>
+    <lastmod>2020-09-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://neelkamalpuri.netlify.app/projects/project3/</loc>
     <lastmod>2020-09-18T00:00:00+00:00</lastmod>
   </url>
   
