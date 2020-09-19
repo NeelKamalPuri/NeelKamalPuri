@@ -48,10 +48,16 @@ library(vroom)
 In this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.
 
 ```{r, get_tfl_data, cache=FALSE, message=FALSE}
+#Obtaining the data set from Tfl's website
 url <- "https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx"
+```
 
+```{r, get_tfl_data3, warning = FALSE, cache=TRUE, message=FALSE, echo=FALSE, include = FALSE}
 # Download TFL data to temporary file
 httr::GET(url, write_disk(bike.temp <- tempfile(fileext = ".xlsx")))
+```
+
+```{r, get_tfl_data2, cache=FALSE, message=FALSE}
 
 # Use read_excel to read it as dataframe
 bike0 <- read_excel(bike.temp,
@@ -65,14 +71,14 @@ bike <- bike0 %>%
   mutate (year = year(day),
           month = lubridate::month(day),
           week = isoweek(day))
+
 ```
 
-## Reproduction of distribution of bikes hired per month
+## Creating distribution of bikes hired per month
 
-Reproduction #1
 Over here, we create distribution of bikes hired on a monthly basis for the period 2015 - 2020.
 
-```{r tfl_month_year_grid, echo=FALSE, message=FALSE,eval=TRUE, warning=FALSE, fig.height=8.55,fig.width=20}
+```{r tfl_month_year_grid,message=FALSE,eval=TRUE, warning=FALSE, fig.height=8.55,fig.width=20}
 bike1 <- bike %>% filter(year>2014)
 month.labs <- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 names(month.labs) <- c("1", "2", "3","4", "5", "6","7", "8", "9","10", "11", "12")

@@ -11,18 +11,18 @@
 	<title>Analysis of rental data from TfL bike sharing &middot; Portfolio website for Neel Kamal Puri</title>
 	<!-- Stylesheets -->
 	
-	<link rel="stylesheet" href="https://neelkamalpuri.netlify.app/css/main.css"/>
+	<link rel="stylesheet" href="/css/main.css"/>
 	
 	
 
 	
 
 	<!-- Custom Fonts -->
-	<link href="https://neelkamalpuri.netlify.app/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	
-	<link rel="shortcut icon" type="image/x-icon" href="https://neelkamalpuri.netlify.app/favicon.ico">
-	<link rel="icon" type="image/x-icon" href="https://neelkamalpuri.netlify.app/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://neelkamalpuri.netlify.app/" class="logo"><strong>Neel Kamal Puri</strong> <span></span></a>
+        <a href="/" class="logo"><strong>Neel Kamal Puri</strong> <span></span></a>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -50,15 +50,11 @@
     <nav id="menu">
         <ul class="links">
             
-                <li><a href="https://neelkamalpuri.netlify.app/">Home</a></li>
-            
-                <li><a href="https://neelkamalpuri.netlify.app/blogs">Blogs</a></li>
+                <li><a href="/">Home</a></li>
             
 
         </ul>
         <ul class="actions vertical">
-            
-                <li><a href="https://neelkamalpuri.netlify.app/blogs" class="button special fit">Get Started</a></li>
             
             
         </ul>
@@ -80,16 +76,8 @@
 <div id="excess-rentals-in-tfl-bike-sharing" class="section level1">
 <h1>Excess rentals in TfL bike sharing</h1>
 <p>In this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.</p>
-<pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
-
-# Download TFL data to temporary file
-httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
-<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20200918%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200918T203803Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=460eec4ec16ca7e19827a8d1f184d6b0f94427beb68eb45970324046eabff6df&amp;X-Amz-SignedHeaders=host]
-##   Date: 2020-09-18 20:39
-##   Status: 200
-##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-##   Size: 165 kB
-## &lt;ON DISK&gt;  C:\Users\neelk\AppData\Local\Temp\Rtmp0Kf8aQ\file2e604ff0d49.xlsx</code></pre>
+<pre class="r"><code>#Obtaining the data set from Tfl&#39;s website
+url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;</code></pre>
 <pre class="r"><code># Use read_excel to read it as dataframe
 bike0 &lt;- read_excel(bike.temp,
                    sheet = &quot;Data&quot;,
@@ -102,10 +90,28 @@ bike &lt;- bike0 %&gt;%
   mutate (year = year(day),
           month = lubridate::month(day),
           week = isoweek(day))</code></pre>
-<div id="reproduction-of-distribution-of-bikes-hired-per-month" class="section level2">
-<h2>Reproduction of distribution of bikes hired per month</h2>
-<p>Reproduction #1
-Over here, we create distribution of bikes hired on a monthly basis for the period 2015 - 2020.</p>
+<div id="creating-distribution-of-bikes-hired-per-month" class="section level2">
+<h2>Creating distribution of bikes hired per month</h2>
+<p>Over here, we create distribution of bikes hired on a monthly basis for the period 2015 - 2020.</p>
+<pre class="r"><code>bike1 &lt;- bike %&gt;% filter(year&gt;2014)
+month.labs &lt;- c(&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;,&quot;Sep&quot;,&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;)
+names(month.labs) &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;,&quot;4&quot;, &quot;5&quot;, &quot;6&quot;,&quot;7&quot;, &quot;8&quot;, &quot;9&quot;,&quot;10&quot;, &quot;11&quot;, &quot;12&quot;)
+
+plot_month_year &lt;- ggplot(bike1,aes(x=bikes_hired))+ 
+  geom_density(size=0.75)+ 
+  facet_grid(cols=vars(month),rows=vars(year),labeller=labeller(month=month.labs))+
+  theme_bw() +
+  scale_x_continuous( breaks = c(20000, 40000, 60000),labels = c(&quot;20k&quot;, &quot;40k&quot;, &quot;60k&quot;))+
+  labs(y=&#39;&#39;, x=&#39;Bike Rentals&#39;, title=&#39;Distribution of bikes hired per month&#39;)+
+  theme(title = element_text(size=26, face =&quot;bold&quot;, hjust=0.5),
+        axis.text.y = element_blank(),
+        axis.title = element_text(size=20, face = &quot;bold&quot;),
+        axis.text = element_text(size=14),
+        axis.ticks = element_blank(),
+        strip.text = element_text(size=18),
+        panel.border = element_blank(),
+        strip.background = element_rect(color=&quot;white&quot;, fill=&quot;white&quot;, size=1))
+plot_month_year</code></pre>
 <p><img src="/projects/project4/index_files/figure-html/tfl_month_year_grid-1.png" width="1920" style="display: block; margin: auto;" /></p>
 <p>When look at the density plots of May and Jun in 2020, we can easily notice that their peaks are lower than the peaks of the same month of the previous year, which implies that the bike rentals are less concentrated in these two month. People rent bicycles more frequently on some days and rent bicycles less often on certain days. The possible reason is that covid-19 has changed people’s lifestyles. Some people may rent bicycles more often to do some exercise and some people may be afraid of getting out of their bedrooms thus rent bicycles less often.</p>
 </div>
@@ -155,16 +161,16 @@ Over here, we plot the average monthly change in tfl bikes using ggplot. We also
     <!-- Scripts -->
         <!-- Scripts -->
     <!-- jQuery -->
-    <script src="https://neelkamalpuri.netlify.app/js/jquery.min.js"></script>
-    <script src="https://neelkamalpuri.netlify.app/js/jquery.scrolly.min.js"></script>
-    <script src="https://neelkamalpuri.netlify.app/js/jquery.scrollex.min.js"></script>
-    <script src="https://neelkamalpuri.netlify.app/js/skel.min.js"></script>
-    <script src="https://neelkamalpuri.netlify.app/js/util.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
 
     
 
     <!-- Main JS -->
-    <script src="https://neelkamalpuri.netlify.app/js/main.js"></script>
+    <script src="/js/main.js"></script>
 
     
 

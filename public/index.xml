@@ -2,31 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Portfolio website for Neel Kamal Puri</title>
-    <link>https://neelkamalpuri.netlify.app/</link>
+    <link>/</link>
     <description>Recent content on Portfolio website for Neel Kamal Puri</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://neelkamalpuri.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Analysis of rental data from TfL bike sharing</title>
-      <link>https://neelkamalpuri.netlify.app/projects/project4/</link>
-      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      <link>/projects/project4/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/projects/project4/</guid>
+      <guid>/projects/project4/</guid>
       <description>Excess rentals in TfL bike sharingIn this assignment, we analyse the data from TfL bike sharing in the city of London, UK. We wish to determine any significant patterns in our data set, study any cyclicality or anomalous observations.To do so, we begin by downloading the data set from the link below.
-url &amp;lt;- &amp;quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&amp;quot;# Download TFL data to temporary filehttr::GET(url, write_disk(bike.temp &amp;lt;- tempfile(fileext = &amp;quot;.xlsx&amp;quot;)))## Response [https://airdrive-secure.</description>
+#Obtaining the data set from Tfl&amp;#39;s websiteurl &amp;lt;- &amp;quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&amp;quot;# Use read_excel to read it as dataframebike0 &amp;lt;- read_excel(bike.</description>
+    </item>
+    
+    <item>
+      <title>Exploring the Gapminder data set</title>
+      <link>/projects/project2/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project2/</guid>
+      <description>Gapminder revisitedWe are studying the Gapminder data set to analyse how HIV and life expectancy affect different countries. We will also study the relationship between the two variables to analyse whether one impacts the other.
+# load gapminder HIV datahiv &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;adults_with_hiv_percent_age_15_49.csv&amp;quot;))life_expectancy &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;life_expectancy_years.csv&amp;quot;))# life_expectancy &amp;lt;- my_data &amp;lt;- read.csv(file.choose(&amp;#39;life_expectancy_years.csv&amp;#39;))# get World bank data using wbstatsindicators &amp;lt;- c(&amp;quot;SP.DYN.TFRT.IN&amp;quot;,&amp;quot;SE.PRM.NENR&amp;quot;, &amp;quot;SH.DYN.MORT&amp;quot;, &amp;quot;NY.GDP.PCAP.KD&amp;quot;)library(wbstats)# Load worldbank data setworldbank_data &amp;lt;- wb_data(country=&amp;quot;countries_only&amp;quot;,indicator = indicators, start_date = 1960,end_date = 2016)# Load countries data setcountries &amp;lt;- wbstats::wb_cachelist$countries# Create one column for all years, instead of one column for every individual yearhiv_cleaned &amp;lt;- pivot_longer(hiv, 2:34, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;hiv_prev&amp;quot;)life_exp_cleanead &amp;lt;- pivot_longer(life_expectancy, 2:302, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;life_exp&amp;quot;)# Rename columns for clarityworldbank_data &amp;lt;- worldbank_data %&amp;gt;%rename(GDP_percap = NY.</description>
     </item>
     
     <item>
       <title>Climate change and weather temperature anomalies</title>
-      <link>https://neelkamalpuri.netlify.app/projects/project1/</link>
+      <link>/projects/project1/</link>
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/projects/project1/</guid>
+      <guid>/projects/project1/</guid>
       <description>How real is climate change?We have sourced our data from NASA’s website to begin our analysis.
 weather &amp;lt;- read_csv(&amp;quot;https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.csv&amp;quot;, skip = 1, na = &amp;quot;***&amp;quot;)To clean our data set and make it more legible, we tidy it using the code below:
 tidyweather &amp;lt;- weather %&amp;gt;% select(Year,Jan,Feb,Mar,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec) %&amp;gt;% gather(&amp;quot;month&amp;quot;,&amp;quot;delta&amp;quot;,2:12)Plotting InformationLet us plot the data using a time-series scatter plot, and add a trendline.
@@ -34,21 +44,11 @@ tidyweather &amp;lt;- tidyweather %&amp;gt;%mutate(date = ymd(paste(as.</descri
     </item>
     
     <item>
-      <title>Exploring the Gapminder data set</title>
-      <link>https://neelkamalpuri.netlify.app/projects/project2/</link>
-      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://neelkamalpuri.netlify.app/projects/project2/</guid>
-      <description>Gapminder revisitedWe are studying the Gapminder data set to analyse how HIV and life expectancy affect different countries. We will also study the relationship between the two variables to analyse whether one impacts the other.
-# load gapminder HIV datahiv &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;adults_with_hiv_percent_age_15_49.csv&amp;quot;))life_expectancy &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;,&amp;quot;life_expectancy_years.csv&amp;quot;))# life_expectancy &amp;lt;- my_data &amp;lt;- read.csv(file.choose(&amp;#39;life_expectancy_years.csv&amp;#39;))# get World bank data using wbstatsindicators &amp;lt;- c(&amp;quot;SP.DYN.TFRT.IN&amp;quot;,&amp;quot;SE.PRM.NENR&amp;quot;, &amp;quot;SH.DYN.MORT&amp;quot;, &amp;quot;NY.GDP.PCAP.KD&amp;quot;)library(wbstats)# Load worldbank data setworldbank_data &amp;lt;- wb_data(country=&amp;quot;countries_only&amp;quot;,indicator = indicators, start_date = 1960,end_date = 2016)# Load countries data setcountries &amp;lt;- wbstats::wb_cachelist$countries# Create one column for all years, instead of one column for every individual yearhiv_cleaned &amp;lt;- pivot_longer(hiv, 2:34, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;hiv_prev&amp;quot;)life_exp_cleanead &amp;lt;- pivot_longer(life_expectancy, 2:302, names_to = &amp;quot;date&amp;quot;, values_to = &amp;quot;life_exp&amp;quot;)# Rename columns for clarityworldbank_data &amp;lt;- worldbank_data %&amp;gt;%rename(GDP_percap = NY.</description>
-    </item>
-    
-    <item>
       <title>Studying approval margins of Donald Trump</title>
-      <link>https://neelkamalpuri.netlify.app/projects/project3/</link>
+      <link>/projects/project3/</link>
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/projects/project3/</guid>
+      <guid>/projects/project3/</guid>
       <description>Will he return?With re-elections in the United States coming close, it is interesting to study the popularity of the current president - Donal Trump. We therefore use detailed data from the website fivethirtyeight.com which provides poll data on Donal Trump.
 all polls that track the president’s approval.
 In order to fully understand the data, we must first use the glimpse() function before deciding how we must continue our analysis.</description>
@@ -56,46 +56,46 @@ In order to fully understand the data, we must first use the glimpse() function 
     
     <item>
       <title>Aliquam</title>
-      <link>https://neelkamalpuri.netlify.app/blogs/aliquam/</link>
+      <link>/blogs/aliquam/</link>
       <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/blogs/aliquam/</guid>
+      <guid>/blogs/aliquam/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tempus</title>
-      <link>https://neelkamalpuri.netlify.app/blogs/tempus/</link>
+      <link>/blogs/tempus/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:13 -0500</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/blogs/tempus/</guid>
+      <guid>/blogs/tempus/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Magna</title>
-      <link>https://neelkamalpuri.netlify.app/blogs/magna/</link>
+      <link>/blogs/magna/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/blogs/magna/</guid>
+      <guid>/blogs/magna/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ipsum</title>
-      <link>https://neelkamalpuri.netlify.app/blogs/ipsum/</link>
+      <link>/blogs/ipsum/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/blogs/ipsum/</guid>
+      <guid>/blogs/ipsum/</guid>
       <description>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</description>
     </item>
     
     <item>
       <title>Hello R Markdown</title>
-      <link>https://neelkamalpuri.netlify.app/post/2015-07-23-r-rmarkdown/</link>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
-      <guid>https://neelkamalpuri.netlify.app/post/2015-07-23-r-rmarkdown/</guid>
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
       <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
 You can embed an R code chunk like this:
 summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
