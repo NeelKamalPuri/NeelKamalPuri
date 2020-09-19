@@ -50,9 +50,6 @@ In this assignment, we analyse the data from TfL bike sharing in the city of Lon
 ```{r, get_tfl_data, cache=FALSE, message=FALSE}
 url <- "https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx"
 
-# Download TFL data to temporary file
-httr::GET(url, write_disk(bike.temp <- tempfile(fileext = ".xlsx")))
-
 # Use read_excel to read it as dataframe
 bike0 <- read_excel(bike.temp,
                    sheet = "Data",
@@ -65,6 +62,13 @@ bike <- bike0 %>%
   mutate (year = year(day),
           month = lubridate::month(day),
           week = isoweek(day))
+
+```
+
+```{r, get_tfl_data2, cache=FALSE, message=FALSE}
+
+# Download TFL data to temporary file
+httr::GET(url, write_disk(bike.temp <- tempfile(fileext = ".xlsx")))
 ```
 
 ## Reproduction of distribution of bikes hired per month
@@ -72,7 +76,7 @@ bike <- bike0 %>%
 Reproduction #1
 Over here, we create distribution of bikes hired on a monthly basis for the period 2015 - 2020.
 
-```{r tfl_month_year_grid, echo=FALSE, message=FALSE,eval=TRUE, warning=FALSE, fig.height=8.55,fig.width=20}
+```{r tfl_month_year_grid,message=FALSE,eval=TRUE, warning=FALSE, fig.height=8.55,fig.width=20}
 bike1 <- bike %>% filter(year>2014)
 month.labs <- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 names(month.labs) <- c("1", "2", "3","4", "5", "6","7", "8", "9","10", "11", "12")
